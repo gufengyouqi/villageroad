@@ -1,0 +1,76 @@
+feigh:
+  httpclient:
+    time-to-live: 600
+feign:
+  okhttp:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 30000
+        readTimeout: 30000
+  httpclient:
+    enabled: false
+    max-connections: 250
+  hytrix:
+    enabled: true
+multipart:
+  maxFileSize: 50Mb
+  maxRequestSize: 50Mb
+
+spring:
+  datasource:
+    shijia:
+      jdbc-url: jdbc:mysql://127.0.0.1:3307/villageroad?allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      hikari:
+        maximum-pool-size: 10
+        minimum-idle: 5
+        #-------------连接检测情况--------------------------------
+        #用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'
+        #如果驱动支持JDBC4，建议不设置，因为这时默认会调用Connection.isValid()方法来检测，该方式效率会更高
+        #默认为空
+        connection-test-query: SELECT 1 from dual
+        #检测连接是否有效的超时时间，单位毫秒
+        #最小允许值250 ms
+        #默认5000 ms。
+        validation-timeout: 30000
+        #连接保持空闲而不被驱逐的最小时间。单位毫秒。
+        #该配置只有再minimumIdle < maximumPoolSize才会生效，最小允许值为10000 ms。
+        #默认值10000*60 = 10分钟。
+        idle-timeout: 600000
+        #连接对象允许“泄露”的最大时间。单位毫秒
+        #最小允许值为2000 ms。
+        #默认0，表示不开启泄露检测
+        leakdetection-threshold: 0
+        #连接最大存活时间。单位毫秒
+        #最小允许值30000 ms
+        #默认30分钟。可通过JMX动态修改该参数
+        maxlifetime: 1800000
+        #获取连接时最大等待时间，单位毫秒
+        #获取时间超过该配置，将抛出异常。最小允许值250 ms
+        #默认30000 ms。
+        connection-timeout: 30000
+        #-------------事务相关的属性--------------------------------
+        #当连接返回池中时是否设置自动提交
+        #默认值true
+        auto-commit: true
+        #连接池创建的连接的默认的TransactionIsolation状态
+        #可用值为下列之一：NONE,TRANSACTION_READ_UNCOMMITTED, TRANSACTION_READ_COMMITTED, TRANSACTION_REPEATABLE_READ, TRANSACTION_SERIALIZABLE
+        #默认值为空，由驱动决定
+        transaction-isolation: TRANSACTION_REPEATABLE_READ
+
+
+#  freemarker:
+#    cache: false
+#    charset: UTF-8
+#    content-type: text/html
+#  jpa:
+#    generate-ddl: true
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: villageroad
+#  cloud:
+#    nacos:
+#      config:
+#        file-extension: yaml
+#        extension-configs:
+#          - data-id: application.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-dev.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-prod.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-test.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-uat.yml
+#            refresh: true
+#            group: ${spring.application.name}
