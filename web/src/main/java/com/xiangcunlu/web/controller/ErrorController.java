@@ -1,10 +1,8 @@
 package com.xiangcunlu.web.controller;
 
-import freemarker.template.utility.NullArgumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 自定义错误页面覆盖spring boot 中的错误页面
