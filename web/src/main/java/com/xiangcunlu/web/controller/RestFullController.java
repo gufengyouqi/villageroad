@@ -21,4 +21,10 @@ public class RestFullController extends BaseController {
         }
         return createResponseEntity(true);
     }
+
+    public static void main(String[] args) {
+        Integer a=1;
+        System.out.println((long)a);
+    }
 }
+
