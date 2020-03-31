@@ -29,6 +29,9 @@ public class ConvertUtils {
             b = nums[1];
             len = a.length();
         }
+        if (len > 7) {
+            throw new NumberFormatException("金额过大无法计算！");
+        }
 
         int offset = len % 4;
         for (int i = 0; i < a.length(); ) {
