@@ -58,6 +58,12 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.xiangcunlu</groupId>
+                <artifactId>message</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- tools -->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -70,6 +76,14 @@
                 <artifactId>guava</artifactId>
                 <version>22.0</version>
             </dependency>
+
+            <!-- aliyun -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>4.5.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <dependencies>
