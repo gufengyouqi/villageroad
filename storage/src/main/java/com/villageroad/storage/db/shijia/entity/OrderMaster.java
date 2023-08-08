@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author houshengbin
+ */
 @Data
 public class OrderMaster {
     @TableId(type = IdType.AUTO)
@@ -24,9 +27,6 @@ public class OrderMaster {
      * 买家地址
      */
     private String buyerAddress;
-    /**
-     * 买家id
-     */
     /**
      * 买家id
      */

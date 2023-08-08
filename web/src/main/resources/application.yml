@@ -2,6 +2,13 @@ spring:
   profiles:
     active: dev
   port: 8080
+  freemarker:
+    suffix: .ftl
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+#  jackson:
+#    property-naming-strategy: SNAKE_CASE
 server:
   port: 8080
   error:

@@ -20,17 +20,21 @@ import java.util.List;
 public class RestFullController extends BaseController {
     private static final String MEDIA_DIR = "/home/user/media_upload";
     @Autowired
-    private ProductInfoDao pir;
+    private ProductInfoDao productInfoDao;
 
     @RequestMapping(value = "/test")
     public ResponseEntity test() {
-        List<ProductInfo> list = pir.list();
+        List<ProductInfo> list = productInfoDao.list();
+        ProductInfo productInfo = new ProductInfo();
+        productInfo.setId(123L);
+        productInfo.setName("123");
+        list.add(productInfo);
         System.out.println(list.size());
         Cookie[] cookies = this.request.getCookies();
         for (Cookie cookie : cookies) {
             System.out.println(cookie.getValue());
         }
-        return createResponseEntity(true);
+        return createResponseEntity(list);
     }
 
 }

@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author houshengbin
+ */
 @Data
 public class Category {
     @TableId(type = IdType.AUTO)
