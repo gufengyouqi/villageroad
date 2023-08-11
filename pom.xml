@@ -16,7 +16,7 @@
         <module>service</module>
         <module>message</module>
         <module>api</module>
-        <module>core</module>
+        <module>processor</module>
         <module>shijia</module>
         <module>storage</module>
     </modules>
@@ -68,18 +68,18 @@
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>3.15.5</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-security</artifactId>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-starter-data-jdbc</artifactId>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-starter-security</artifactId>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.springframework.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-openfeign</artifactId>-->
+            <!--            </dependency>-->
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -113,7 +113,7 @@
             <!-- 项目模块 -->
             <dependency>
                 <groupId>com.xiangcunlu</groupId>
-                <artifactId>core</artifactId>
+                <artifactId>processor</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -221,13 +221,13 @@
                 <artifactId>nacos-config-spring-boot-starter</artifactId>
                 <version>${nacos.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.nacos</groupId>-->
-<!--                <artifactId>nacos-client</artifactId>-->
-<!--                <version>${nacos.version}</version>-->
-<!--                &lt;!&ndash; 指定纯净版SDK &ndash;&gt;-->
-<!--                <classifier>pure</classifier>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.nacos</groupId>-->
+            <!--                <artifactId>nacos-client</artifactId>-->
+            <!--                <version>${nacos.version}</version>-->
+            <!--                &lt;!&ndash; 指定纯净版SDK &ndash;&gt;-->
+            <!--                <classifier>pure</classifier>-->
+            <!--            </dependency>-->
 
             <!-- feign -->
             <dependency>

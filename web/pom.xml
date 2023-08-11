@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.xiangcunlu</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>processor</artifactId>
         </dependency>
         <dependency>
             <groupId>com.xiangcunlu</groupId>

@@ -9,12 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>core</artifactId>
+    <artifactId>processor</artifactId>
 
-<dependencies>
-    <dependency>
-        <groupId>com.alibaba.boot</groupId>
-        <artifactId>nacos-config-spring-boot-starter</artifactId>
-    </dependency>
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.xiangcunlu</groupId>
+            <artifactId>service</artifactId>
+        </dependency>
+    </dependencies>
 </project>
