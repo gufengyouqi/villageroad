@@ -1,7 +1,9 @@
 package com.villageroad.model;
 
 /**
- * Created by wuhui on 2017/6/29.
+ *
+ * @author flybird
+ * @date 2017/6/29
  */
 public enum BizError {
 

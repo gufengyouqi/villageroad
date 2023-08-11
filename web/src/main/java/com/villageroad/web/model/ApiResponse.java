@@ -61,5 +61,9 @@ public class ApiResponse<T> {
      * 总共多少记录
      */
     private Long totalElements;
+    /**
+     * 请求id
+     */
+    private String requestId;
 
 }

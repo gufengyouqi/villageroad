@@ -4,7 +4,9 @@ import com.villageroad.model.BizError;
 import lombok.Getter;
 
 /**
- * Created by flybird on 2018/3/30.
+ *
+ * @author flybird
+ * @date 2018/3/30
  */
 public class BizException extends RuntimeException {
 
