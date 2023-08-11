@@ -4,6 +4,7 @@ import com.villageroad.storage.db.shijia.dao.ProductInfoDao;
 import com.villageroad.storage.db.shijia.entity.ProductInfo;
 import com.villageroad.storage.redis.RedisRepository;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,9 @@ import java.util.List;
 
 
 /**
- * Created by flybird on 2018/4/25.
+ *
+ * @author flybird
+ * @date 2018/4/25
  */
 @Slf4j
 @RestController
@@ -28,7 +31,7 @@ public class RestFullController extends BaseController {
     private RedisRepository redisRepository;
 
     @RequestMapping(value = "/test")
-    public ResponseEntity test() {
+    public ResponseEntity test(HttpSession session) {
         List<ProductInfo> list = productInfoDao.list();
         ProductInfo productInfo = new ProductInfo();
         productInfo.setId(123L);
@@ -44,6 +47,8 @@ public class RestFullController extends BaseController {
         }
         System.out.println(redisRepository.get("test"));
         redisRepository.delete("test");
+        session.setAttribute("test", "test");
+        System.out.println(session.getId());
         return createResponseEntity(list);
     }
 
