@@ -1,13 +1,13 @@
 package com.villageroad.processor;
 
 import com.villageroad.utils.MonitorLog;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 
 @Slf4j
 @Component

@@ -2,6 +2,7 @@ package com.villageroad.web.controller;
 
 import com.villageroad.storage.db.shijia.dao.ProductInfoDao;
 import com.villageroad.storage.db.shijia.entity.ProductInfo;
+import com.villageroad.storage.nacos.SwitchConfiguration;
 import com.villageroad.storage.redis.RedisRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,9 @@ public class RestFullController extends BaseController {
     @Autowired
     private RedisRepository redisRepository;
 
+    @Autowired
+    private SwitchConfiguration switchConfiguration;
+
     @RequestMapping(value = "/test")
     public ResponseEntity test(HttpSession session) {
         List<ProductInfo> list = productInfoDao.list();
@@ -45,6 +49,7 @@ public class RestFullController extends BaseController {
         for (Cookie cookie : cookies) {
             System.out.println(cookie.getValue());
         }
+        System.out.println(switchConfiguration.getTest());
         System.out.println(redisRepository.get("test"));
         redisRepository.delete("test");
         session.setAttribute("test", "test");

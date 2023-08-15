@@ -1,23 +1,30 @@
 spring:
   application:
     name: villageroad
-#  cloud:
-#    nacos:
-#      config:
-#        file-extension: yaml
-#        extension-configs:
-#          - data-id: application.yml
-#            refresh: true
-#            group: ${spring.application.name}
-#          - data-id: application-dev.yml
-#            refresh: true
-#            group: ${spring.application.name}
-#          - data-id: application-prod.yml
-#            refresh: true
-#            group: ${spring.application.name}
-#          - data-id: application-test.yml
-#            refresh: true
-#            group: ${spring.application.name}
-#          - data-id: application-uat.yml
-#            refresh: true
-#            group: ${spring.application.name}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+      config:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: nacos
+        contextPath: /nacos
+        file-extension: yaml
+        namespace: c486342d-2df5-4067-8a83-817298e52cc7
+        shared-configs:
+          - data-id: application.yml
+            refresh: true
+            group: ${spring.application.name}
+        extension-configs:
+          - data-id: application-dev.yml
+            refresh: true
+            group: ${spring.application.name}
+          - data-id: application-uat.yml
+            refresh: true
+            group: ${spring.application.name}
+          - data-id: application-prod.yml
+            refresh: true
+            group: ${spring.application.name}

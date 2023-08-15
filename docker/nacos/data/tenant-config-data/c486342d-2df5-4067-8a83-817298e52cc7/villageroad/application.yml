@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: prod
+  multipart:
+    max-file-size: 50Mb
+    max-request-size: 50Mb
+  freemarker:
+    suffix: .ftl
+    charset: UTF-8
+    content-type: text/html
+    template-loader-path: classpath:/templates/
+    cache: false
+    check-template-location: true
+    enabled: true
+server:
+  port: 8080
+  error:
+    path: /error
+logging:
+  level:
+    root: info
