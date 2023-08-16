@@ -36,16 +36,15 @@ public class RestFullController extends BaseController {
 
     @RequestMapping(value = "/test")
     public ResponseEntity test(HttpSession session) {
-        List<ProductInfo> list = productInfoDao.list();
         ProductInfo productInfo = new ProductInfo();
-        productInfo.setId(123L);
-        productInfo.setName("123");
-        productInfo.setCreateTime(new Date());
-        list.add(productInfo);
-        System.out.println(list.size());
+        productInfo.setName("test");
+        productInfo.setPrice(10F);
+        productInfo.setStock(100);
+        productInfo.setDescription("test");
+        productInfoDao.save(productInfo);
+        List<ProductInfo> list = productInfoDao.list();
         Cookie[] cookies = this.request.getCookies();
         redisRepository.set("test", "test");
-        redisRepository.set("test", productInfo);
         for (Cookie cookie : cookies) {
             System.out.println(cookie.getValue());
         }

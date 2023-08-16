@@ -1,10 +1,15 @@
 package com.villageroad.storage.db.config;
 
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import com.p6spy.engine.spy.P6SpyDriver;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -20,15 +25,33 @@ import javax.sql.DataSource;
 @Configuration
 @EnableConfigurationProperties
 public class DataSourceConfig {
+    @Autowired
+    private MybatisPlusInterceptor mybatisPlusInterceptor;
+
+    @Autowired
+    private GlobalConfig globalConfig;
+
+    @Value("${spring.profiles.active}")
+    private String active;
+
+    private static final String ACTIVE_DEV = "dev";
+
     // shiJiaDataSource
     @Bean("shiJiaDataSource")
     @ConfigurationProperties("spring.datasource.shijia")
     public HikariDataSource dataSource1() {
-        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean(name = "shiJiaJdbcTemplate")
-    public JdbcTemplate jdbcTemplate1(@Qualifier("shiJiaDataSource") DataSource ds) {
+    public JdbcTemplate jdbcTemplate1(@Qualifier("shiJiaDataSource") HikariDataSource ds) {
+        // dev环境下使用p6spy
+        if (ACTIVE_DEV.equals(active)) {
+            String jdbcUrl = "jdbc:p6spy:mysql://127.0.0.1:3307/villageroad?allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai";
+            String driverClassName = P6SpyDriver.class.getName();
+            ds.setDriverClassName(driverClassName);
+            ds.setJdbcUrl(jdbcUrl);
+        }
         return new JdbcTemplate(ds);
     }
 
@@ -38,9 +61,14 @@ public class DataSourceConfig {
     }
 
     private SqlSessionFactory createSqlSessionFactory(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        MybatisConfiguration mybatisConfiguration = new MybatisConfiguration();
+        MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+        factoryBean.setGlobalConfig(globalConfig);
         factoryBean.setDataSource(dataSource);
-        factoryBean.setConfiguration(new MybatisConfiguration());
+        // 配置
+        factoryBean.setConfiguration(mybatisConfiguration);
+        factoryBean.setPlugins(mybatisPlusInterceptor);
+        // 设置全局配置
         return factoryBean.getObject();
     }
 

@@ -13,18 +13,18 @@ spring:
         password: nacos
         contextPath: /nacos
         file-extension: yaml
-        namespace: c486342d-2df5-4067-8a83-817298e52cc7
-        shared-configs:
-          - data-id: application.yml
-            refresh: true
-            group: ${spring.application.name}
-        extension-configs:
-          - data-id: application-dev.yml
-            refresh: true
-            group: ${spring.application.name}
-          - data-id: application-uat.yml
-            refresh: true
-            group: ${spring.application.name}
-          - data-id: application-prod.yml
-            refresh: true
-            group: ${spring.application.name}
+#        namespace: c486342d-2df5-4067-8a83-817298e52cc7
+#        shared-configs:
+#          - data-id: application.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#        extension-configs:
+#          - data-id: application-dev.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-uat.yml
+#            refresh: true
+#            group: ${spring.application.name}
+#          - data-id: application-prod.yml
+#            refresh: true
+#            group: ${spring.application.name}
