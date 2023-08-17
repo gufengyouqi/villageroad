@@ -1,6 +1,7 @@
 version: "3.9"
 services:
   redis:
+    hostname: redis
     image: redis:7.0.12
     container_name: redis
     restart: always
@@ -11,7 +12,9 @@ services:
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server /usr/local/etc/redis/redis.conf
   mysql:
+    hostname: mysql
     image: mysql:8.0.31
+#    network_mode: "host" # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
     depends_on:
       - redis
     container_name: mysql
@@ -22,13 +25,17 @@ services:
       - ./mysql/data/mysql:/var/lib/mysql            #将容器中运行的mysql数据保存到宿主机，防止容器删除后数据丢失
       - ./mysql/init:/docker-entrypoint-initdb.d/    #/docker-entrypoint-initdb.d/这是数据库提供的初始化目录，数据库在启动时会默认执行当期目录下的以.sql或者.sh结尾的文件。
     environment:
+      - LANG=C.UTF-8                                #设置容器编码
+      - TZ=Asia/Shanghai                            #设置容器时区与宿主机保持一致
       - MYSQL_ROOT_PASSWORD=123456                  #设置数据库密码
       - MYSQL_DATABASE=villageroad                  #设置数据库名称
       - MYSQL_USER=admin                            #设置数据库用户名
       - MYSQL_PASSWORD=admin                         #设置数据库密码
       - MYSQL_ALLOW_EMPTY_PASSWORD=false            #设置是否允许空密码
   nacos:
+    hostname: nacos
     image: nacos/nacos-server:v2.2.3
+#    network_mode: host # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
     depends_on:
       - mysql
     container_name: nacos
@@ -40,16 +47,16 @@ services:
       - "7848:7848"
     environment:
       - PREFER_HOST_MODE=hostname
+      - MODE=standalone
       - MYSQL_DATABASE_NUM=1
-      - MYSQL_SERVICE_HOST=10.6.80.182
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=host.docker.internal
       - MYSQL_SERVICE_PORT=3307
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=123456
       - MYSQL_SERVICE_DB_PARAM=allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
       - NACOS_AUTH_ENABLE=true
-      - SPRING_DATASOURCE_PLATFORM=mysql
-      - MODE=standalone
       - NACOS_AUTH_IDENTITY_KEY=2222
       - NACOS_AUTH_IDENTITY_VALUE=2xxx
       - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
