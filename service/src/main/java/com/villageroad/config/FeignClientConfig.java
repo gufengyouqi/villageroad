@@ -1,17 +1,22 @@
 package com.villageroad.config;
 
 import com.villageroad.interceptors.OkHttpInterceptor;
+import feign.Feign;
 import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-//@ConditionalOnClass(Feign.class)
-//@AutoConfigureBefore(FeignAutoConfiguration.class)
-//@ConditionalOnProperty(value = "feign.okhttp.enabled")
+@ConditionalOnClass(Feign.class)
+@AutoConfigureBefore(FeignAutoConfiguration.class)
+@ConditionalOnProperty(value = "feign.okhttp.enabled")
 @Slf4j
 public class FeignClientConfig {
     @Autowired

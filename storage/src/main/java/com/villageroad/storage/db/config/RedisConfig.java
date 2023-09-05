@@ -39,20 +39,24 @@ public class RedisConfig extends CachingConfigurerSupport {
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.activateDefaultTyping(om.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+
+        //使用FastJsonRedisSerializer来序列化和反序列化redis的value值
+        Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
+
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
         // key采用String的序列化方式
         template.setKeySerializer(stringRedisSerializer);
         // hash的key也采用jackson的序列化方式
-        template.setHashKeySerializer(jackson2JsonRedisSerializer);
+        template.setHashKeySerializer(serializer);
         // value序列化方式采用jackson
-        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.setValueSerializer(serializer);
         // hash的value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        template.setHashValueSerializer(serializer);
+
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.activateDefaultTyping(om.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
+        serializer.setObjectMapper(om);
         template.afterPropertiesSet();
 
         return template;

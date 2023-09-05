@@ -13,25 +13,25 @@ import java.util.List;
  * @author flybird
  * @date 2018/4/25
  */
-public class BaseController {
+public class BaseController<T> {
     @Autowired
     protected HttpServletRequest request;
 
-    protected ResponseEntity<ApiResponse> createResponseEntity(Object entity) {
-        ApiResponse response = new ApiResponse();
+    protected ResponseEntity<T> createResponseEntity(Object entity) {
+        ApiResponse<Object> response = new ApiResponse<>();
         response.setStatus("OK");
         response.setEntity(entity);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    protected ResponseEntity<ApiResponse> createResponseEntity(Object entity,String status) {
-        ApiResponse response = new ApiResponse();
+    protected ResponseEntity<?> createResponseEntity(Object entity,String status) {
+        ApiResponse<Object> response = new ApiResponse<>();
         response.setStatus(status);
         response.setEntity(entity);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
-    protected ResponseEntity<ApiResponse> createResponseEntity(List<?> entities) {
+    protected ResponseEntity<?> createResponseEntity(List<?> entities) {
         ApiResponse response = new ApiResponse();
         response.setStatus("OK");
         response.setEntities(entities);

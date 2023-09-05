@@ -3,7 +3,7 @@ package com.villageroad.web.controller;
 import com.villageroad.storage.db.shijia.dao.ProductInfoDao;
 import com.villageroad.storage.db.shijia.entity.ProductInfo;
 import com.villageroad.storage.nacos.SwitchConfiguration;
-import com.villageroad.storage.redis.RedisRepository;
+import com.villageroad.storage.redis.RedisCache;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +28,7 @@ public class RestFullController extends BaseController {
     private ProductInfoDao productInfoDao;
 
     @Autowired
-    private RedisRepository redisRepository;
+    private RedisCache redisCache;
 
     @Autowired
     private SwitchConfiguration switchConfiguration;
@@ -44,13 +43,13 @@ public class RestFullController extends BaseController {
         productInfoDao.save(productInfo);
         List<ProductInfo> list = productInfoDao.list();
         Cookie[] cookies = this.request.getCookies();
-        redisRepository.set("test", "test");
+        redisCache.setCacheObject("test", "test");
         for (Cookie cookie : cookies) {
             System.out.println(cookie.getValue());
         }
         System.out.println(switchConfiguration.getTest());
-        System.out.println(redisRepository.get("test"));
-        redisRepository.delete("test");
+        System.out.println((String) redisCache.getCacheObject("test"));
+        redisCache.deleteObject("test");
         session.setAttribute("test", "test");
         System.out.println(session.getId());
         return createResponseEntity(list);

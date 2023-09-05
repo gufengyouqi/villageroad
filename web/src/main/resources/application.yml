@@ -4,12 +4,16 @@ spring:
   multipart:
     max-file-size: 50Mb
     max-request-size: 50Mb
-  freemarker:
-    suffix: .ftl
-    charset: UTF-8
-    content-type: text/html
-    template-loader-path: classpath:/templates/
+  mvc:
+    favicon:
+      enabled: true
+      location: /favicon.ico
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
     cache: false
+    mode: LEGACYHTML5   # 非严格型检查 默认是html 严格检查
     check-template-location: true
     enabled: true
 server:
@@ -41,3 +45,6 @@ mybatis-plus:
       table-underline: true
       #id类型
       id-type: ASSIGN_ID
+jwt:
+  validtiy: 30
+  secretkey: secret

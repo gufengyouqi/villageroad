@@ -4,11 +4,14 @@ spring:
   multipart:
     max-file-size: 50Mb
     max-request-size: 50Mb
-  freemarker:
-    suffix: .ftl
-    charset: UTF-8
-    content-type: text/html
-    template-loader-path: classpath:/templates/
+  mvc:
+    favicon:
+      enabled: true
+      location: /favicon.ico
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
     cache: false
     check-template-location: true
     enabled: true
@@ -19,3 +22,25 @@ server:
 logging:
   level:
     root: info
+
+#mybatis-plus 配置信息
+mybatis-plus:
+  configuration:
+    #开启驼峰功能
+    map-underscore-to-camel-case: true
+    #FULL 会自动映射任意复杂的结果集（无论是否嵌套）。
+    auto-mapping-behavior: full
+    #配置的缓存的全局开关
+    cache-enabled: true
+    #如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    #配置日志输出
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    #是否开启sql执行分析打印
+    sql-analysis: true
+    db-config:
+      #表名下划线命名默认true
+      table-underline: true
+      #id类型
+      id-type: ASSIGN_ID

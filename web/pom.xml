@@ -57,6 +57,17 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
@@ -64,6 +75,11 @@
             <groupId>com.github.kwaiopen</groupId>
             <artifactId>kwai-open-sdk</artifactId>
             <version>1.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
         </dependency>
     </dependencies>
 
@@ -81,6 +97,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
+                    <fork>true</fork><!-- 如果没有该配置，devtools不会生效 -->
                 </configuration>
             </plugin>
 <!--            <plugin>-->
@@ -100,5 +117,4 @@
 <!--            </plugin>-->
         </plugins>
     </build>
-
 </project>

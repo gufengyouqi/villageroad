@@ -525,7 +525,7 @@ rocksdb.l2andup.hit COUNT : 0
 rocksdb.compaction.key.drop.new COUNT : 0
 rocksdb.compaction.key.drop.obsolete COUNT : 0
 rocksdb.compaction.key.drop.range_del COUNT : 0
-rocksdb.compaction.key.drop.user COUNT : 0
+rocksdb.compaction.key.drop.account COUNT : 0
 rocksdb.compaction.range_del.drop.obsolete COUNT : 0
 rocksdb.compaction.optimized.del.drop.obsolete COUNT : 0
 rocksdb.compaction.cancelled COUNT : 0
@@ -877,7 +877,7 @@ rocksdb.l2andup.hit COUNT : 0
 rocksdb.compaction.key.drop.new COUNT : 0
 rocksdb.compaction.key.drop.obsolete COUNT : 0
 rocksdb.compaction.key.drop.range_del COUNT : 0
-rocksdb.compaction.key.drop.user COUNT : 0
+rocksdb.compaction.key.drop.account COUNT : 0
 rocksdb.compaction.range_del.drop.obsolete COUNT : 0
 rocksdb.compaction.optimized.del.drop.obsolete COUNT : 0
 rocksdb.compaction.cancelled COUNT : 0
@@ -1230,7 +1230,7 @@ rocksdb.l2andup.hit COUNT : 0
 rocksdb.compaction.key.drop.new COUNT : 0
 rocksdb.compaction.key.drop.obsolete COUNT : 0
 rocksdb.compaction.key.drop.range_del COUNT : 0
-rocksdb.compaction.key.drop.user COUNT : 0
+rocksdb.compaction.key.drop.account COUNT : 0
 rocksdb.compaction.range_del.drop.obsolete COUNT : 0
 rocksdb.compaction.optimized.del.drop.obsolete COUNT : 0
 rocksdb.compaction.cancelled COUNT : 0
@@ -1583,7 +1583,7 @@ rocksdb.l2andup.hit COUNT : 0
 rocksdb.compaction.key.drop.new COUNT : 0
 rocksdb.compaction.key.drop.obsolete COUNT : 0
 rocksdb.compaction.key.drop.range_del COUNT : 0
-rocksdb.compaction.key.drop.user COUNT : 0
+rocksdb.compaction.key.drop.account COUNT : 0
 rocksdb.compaction.range_del.drop.obsolete COUNT : 0
 rocksdb.compaction.optimized.del.drop.obsolete COUNT : 0
 rocksdb.compaction.cancelled COUNT : 0
