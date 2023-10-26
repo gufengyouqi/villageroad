@@ -8,6 +8,18 @@
     <artifactId>villageroad</artifactId>
     <packaging>pom</packaging>
     <description>乡村路</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>16</source>
+                    <target>16</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
@@ -368,4 +380,10 @@
 
 
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>
