@@ -18,7 +18,7 @@ feign:
 spring:
   datasource:
     shijia:
-      jdbc-url: jdbc:mysql://127.0.0.1:3307/villageroad?allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+      jdbc-url: jdbc:mysql://www.xiangcunlu.com:3307/villageroad?allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
@@ -60,7 +60,7 @@ spring:
         transaction-isolation: TRANSACTION_REPEATABLE_READ
   data:
     redis:
-      host: localhost
+      host: www.xiangcunlu.com
       port: 6379
       password: 123456
       timeout: 5000

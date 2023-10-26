@@ -16,6 +16,8 @@ spring:
     mode: LEGACYHTML5   # 非严格型检查 默认是html 严格检查
     check-template-location: true
     enabled: true
+  main:
+    allow-circular-references: true
 server:
   port: 8080
   error:
