@@ -28,6 +28,13 @@ public class DpTest {
     }
 
     public static void main(String[] args) {
-        System.out.println(getStepNumber(4)); //1111,112,121,211,13,31
+//        System.out.println(getStepNumber(4)); //1111,112,121,211,13,31
+        Object o = new Object();
+        System.out.println(o);
+        if (null==o){
+            System.out.println(1);
+        }else{
+            System.out.println(2);
+        }
     }
 }
