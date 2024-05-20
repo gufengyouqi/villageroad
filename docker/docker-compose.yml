@@ -1,5 +1,6 @@
 version: "3.9"
 services:
+  # 缓存
   redis:
     hostname: redis
     image: redis:7.0.12
@@ -10,11 +11,12 @@ services:
     volumes:
       - ./redis/data:/usr/local/var/db/redis/
       - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    #      - ./redis/logs/redis-server.log:/var/log/redis/redis-server.log
     command: redis-server /usr/local/etc/redis/redis.conf
-  mysql:
-    hostname: mysql
+  # 关系型数据库
+  hostname: mysql
     image: mysql:8.0.31
-#    network_mode: "host" # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
+    #    network_mode: "host" # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
     depends_on:
       - redis
     container_name: mysql
@@ -23,6 +25,7 @@ services:
       - "3307:3306"
     volumes:
       - ./mysql/data/mysql:/var/lib/mysql            #将容器中运行的mysql数据保存到宿主机，防止容器删除后数据丢失
+      - ./mysql/my.cnf:/etc/my.cnf
       - ./mysql/init:/docker-entrypoint-initdb.d/    #/docker-entrypoint-initdb.d/这是数据库提供的初始化目录，数据库在启动时会默认执行当期目录下的以.sql或者.sh结尾的文件。
     environment:
       - LANG=C.UTF-8                                #设置容器编码
@@ -32,10 +35,12 @@ services:
       - MYSQL_USER=admin                            #设置数据库用户名
       - MYSQL_PASSWORD=admin                         #设置数据库密码
       - MYSQL_ALLOW_EMPTY_PASSWORD=false            #设置是否允许空密码
+    command: --lower-case-table-names=1
+  # 配置中心 注册中心
   nacos:
     hostname: nacos
     image: nacos/nacos-server:v2.2.3
-#    network_mode: host # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
+    #    network_mode: host # 如果需要容器使用宿主机IP(内网IP)，则可以配置此项
     depends_on:
       - mysql
     container_name: nacos
@@ -55,22 +60,25 @@ services:
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=123456
-      - MYSQL_SERVICE_DB_PARAM=allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - NACOS_AUTH_ENABLE=true
       - NACOS_AUTH_IDENTITY_KEY=2222
       - NACOS_AUTH_IDENTITY_VALUE=2xxx
       - NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789
+      - nacos.extension.naming.istio.enabled=true
     volumes:
-#      - ./nacos/init.d:/home/nacos/init.d
+      #     - ./nacos/init.d:/home/nacos/init.d
       - ./nacos/logs:/home/nacos/logs
       - ./nacos/data:/home/nacos/data
-#      - ./nacos/conf:/home/nacos/conf
+  #     - ./nacos/conf:/home/nacos/conf
+  # 监控告警
 #  grafana:
 #    container_name: grafana
 #    image: grafana/grafana:latest
 #    ports:
 #      - 3000:3000
 #    restart: on-failure
+  # 服务器监控搜集服务
 #  prometheus:
 #    container_name: prometheus
 #    image: prom/prometheus:latest
@@ -81,3 +89,82 @@ services:
 #    depends_on:
 #      - nacos
 #    restart: on-failure
+  # k8s 管理服务
+  # 负载均衡
+  nginx:
+    restart: always
+    container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      - NGINX_PORT=80
+      - TZ=Asia/Shanghai
+  # 低代码管理服务
+  appsmith:
+    image: index.docker.io/appsmith/appsmith-ce
+    container_name: appsmith
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./appsmith:/appsmith-stacks
+    restart: unless-stopped
+  # it 资源管理系统
+  snipe-it:
+    image: snipe/snipe-it:latest
+    container_name: snipe-it
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - APP_URL=http://host.docker.internal:8080
+      - MYSQL_PORT_3306_TCP_ADDR= host.docker.internal
+      - MYSQL_PORT_3306_TCP_PORT= 3307
+      - MYSQL_DATABASE=snipe
+      - MYSQL_USER= root
+      - MYSQL_PASSWORD= 123456
+      - APP_ENV=production #optional
+      - APP_DEBUG=false #optional
+      - APP_LOCALE= #optional
+      - MAIL_PORT_587_TCP_ADDR=US/Pacific #optional
+      - MAIL_PORT_587_TCP_PORT=US/Pacific #optional
+      - MAIL_ENV_FROM_ADDR=US/Pacific #optional
+      - MAIL_ENV_FROM_NAME=US/Pacific #optional
+      - MAIL_ENV_ENCRYPTION=US/Pacific #optional
+      - MAIL_ENV_USERNAME=US/Pacific #optional
+      - MAIL_ENV_PASSWORD=US/Pacific #optional
+    volumes:
+      - /path/to/data:/config
+    ports:
+      - 8080:80
+    restart: unless-stopped
+  rancher:
+    image: rancher/rancher:v2.8.2
+    container_name: rancher
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    privileged: true
+  rancher-agent:
+    image: rancher/rancher-agent:latest
+    container_name: rancher-agent
+    restart: unless-stopped
+    privileged: true
+    depends_on:
+      - rancher
+    volumes:
+      - ./rancher_agent/run/docker.sock:/var/run/docker.sock
+      - ./rancher_agent/lib/rancher:/var/lib/rancher
+      - ./rancher_agent/log/rancher:/var/log/rancher
+      - ./rancher_agent/kubernetes:/etc/kubernetes
+      - ./rancher_agent/run:/var/run
+    environment:
+      - CATTLE_NODE_NAME=node1
+      - CATTLE_AGENT_IMAGE=rancher/rancher-agent:latest
+      - CATTLE_SERVER=https://host.docker.internal
