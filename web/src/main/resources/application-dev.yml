@@ -60,8 +60,8 @@ spring:
         transaction-isolation: TRANSACTION_REPEATABLE_READ
   data:
     redis:
-      host: localhost
-      port: 6380
+      host: 127.0.0.1
+      port: 6379
       password: 123456
       timeout: 5000
       jedis:
