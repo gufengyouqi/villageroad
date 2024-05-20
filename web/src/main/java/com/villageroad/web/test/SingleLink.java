@@ -13,7 +13,6 @@ public class SingleLink {
             this.next = node;
         }
     }
-
     /**
      * 赋值法 翻转
      * @param node
@@ -66,5 +65,22 @@ public class SingleLink {
             tmp = tmp.getNext();
         }
         System.out.println("\n======================");
+        Node tmp = n3;
+        while (tmp != null){
+            System.out.println(tmp.val);
+            tmp = tmp.getNext();
+        }
+
+        Node res = null;
+        while (n3 !=null){
+            res = new Node(n3.getVal(),res);
+            n3 = n3.getNext();
+        }
+
+        tmp = res;
+        while (tmp != null){
+            System.out.println(tmp.val);
+            tmp = tmp.getNext();
+        }
     }
 }
