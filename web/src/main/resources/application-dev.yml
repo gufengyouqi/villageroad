@@ -20,7 +20,7 @@ spring:
     shijia:
       jdbc-url: jdbc:mysql://127.0.0.1:3307/villageroad?allowPublicKeyRetrieval=true&characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
-      password: 123456
+      password: 1234
       driver-class-name: com.mysql.cj.jdbc.Driver
       hikari:
         maximum-pool-size: 10

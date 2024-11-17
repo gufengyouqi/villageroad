@@ -1,0 +1,60 @@
+#version: '3.9'
+services:
+    ##redis从配置
+    redisSlave1:
+      image: redis:latest
+      restart: always
+      container_name: redis-slave-1
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ##将26382映射到26382上
+      ports:
+        - "26382:26382"
+      volumes:
+        ##数据目录，要确保先创建好
+        - ./slave1/data:/data
+        - ./slave1/conf/redis.conf:/usr/local/etc/redis/redis.conf
+        - ./slave1/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"
+    sentinel1:
+      image: redis:latest
+      restart: always
+      container_name: redis-sentinel-1
+      ports:
+        - 36382:36382
+      command: redis-sentinel /opt/redis/sentinel/sentinel1.conf
+      volumes:
+        - ./sentinel1/data:/data
+        - ./sentinel1/conf/sentinel1.conf:/opt/redis/sentinel/sentinel1.conf
+        - ./sentinel1/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"
+    ##redis从2配置
+    redisSlave2:
+      image: redis:latest
+      restart: always
+      container_name: redis-slave-2
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ##将26383映射到26383上
+      ports:
+        - "26383:26383"
+      volumes:
+        ##数据目录，要确保先创建好
+        - ./slave2/data:/data
+        - ./slave2/conf/redis.conf:/usr/local/etc/redis/redis.conf
+        - ./slave2/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"
+    sentinel2:
+      image: redis:latest
+      restart: always
+      container_name: redis-sentinel-2
+      ports:
+        - 36383:36383
+      command: redis-sentinel /opt/redis/sentinel/sentinel2.conf
+      volumes:
+        - ./sentinel2/data:/data
+        - ./sentinel2/conf/sentinel2.conf:/opt/redis/sentinel/sentinel2.conf
+        - ./sentinel2/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"

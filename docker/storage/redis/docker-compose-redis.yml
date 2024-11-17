@@ -1,0 +1,31 @@
+#version: "3.9"
+services:
+    ##redis主配置
+    redisMaster:
+      image: redis:latest
+      restart: always
+      container_name: redis-master
+      command: redis-server /usr/local/etc/redis/redis.conf
+      ##将26381映射到26381上
+      ports:
+        - "26381:26381"
+      volumes:
+        ##数据目录，要确保先创建好
+        - ./master/data:/data
+        - ./master/conf/redis.conf:/usr/local/etc/redis/redis.conf
+        - ./master/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"
+    sentinel:
+      image: redis:latest
+      restart: always
+      container_name: redis-sentinel
+      ports:
+        - 36381:36381
+      command: redis-sentinel /opt/redis/sentinel/sentinel.conf
+      volumes:
+        - ./sentinel/data:/data
+        - ./sentinel/conf/sentinel.conf:/opt/redis/sentinel/sentinel.conf
+        - ./sentinel/logs:/logs
+        - "/etc/localtime:/etc/localtime"
+        - "/usr/share/zoneinfo/Asia/Shanghai:/etc/timezone"
