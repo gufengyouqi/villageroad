@@ -1,5 +1,4 @@
 version: '3.6'
-name: gitlab
 services:
   gitlab:
     image: 'gitlab/gitlab-ce:latest'
@@ -13,11 +12,10 @@ services:
         external_url 'http://127.0.0.1:30080'
         registry_external_url 'http://127.0.0.1:30080'
         gitlab_rails['time_zone'] = 'Asia/Shanghai'
-      GITLAB_ROOT_PASSWORD: '1987319Hou!'
     ports:
       - '30080:30080' # 注意宿主机和容器内部的端口要一致，否则external_url无法访问
-      - '443:443'
-      - '22:22'
+      - '1443:443'
+      - '122:22'
     volumes:
       - './gitlab/config:/etc/gitlab'
       - './gitlab/logs:/var/log/gitlab'
@@ -45,7 +43,7 @@ services:
       - postgres
     environment:
       - SONARQUBE_JDBC_USERNAME=sonar
-      - SONARQUBE_JDBC_PASSWORD=Sonar12#$
+      - SONARQUBE_JDBC_PASSWORD=sonar
       - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube
     volumes:
       - ./sonarqube/conf:/opt/sonarqube/conf
@@ -60,7 +58,7 @@ services:
       - 5432:5432
     environment:
       - POSTGRES_USER=sonar
-      - POSTGRES_PASSWORD=Sonar12#$
+      - POSTGRES_PASSWORD=sonar
       - POSTGRES_DB=sonarqube
     volumes:
       - ./postgres/postgresql:/var/lib/postgresql
